@@ -1,13 +1,14 @@
 class CreateGames < ActiveRecord::Migration[6.0]
+  ActiveRecord::Schema.define do
+    enable_extension 'hstore' unless extension_enabled?('hstore')
+  end
+  
   def change
     create_table :games do |t|
       t.string 'name'
       t.string 'user'
-      t.integer 'rows'
-      t.integer 'cols'
-      t.integer 'cell_size'
-      t.integer 'speed'
-      t.boolean 'cells', array: true
+      t.hstore 'settings'
+      t.boolean 'grid', array: true
       t.timestamps
     end
   end

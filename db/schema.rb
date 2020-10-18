@@ -13,16 +13,14 @@
 ActiveRecord::Schema.define(version: 2020_10_17_215634) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.string "user"
-    t.integer "rows"
-    t.integer "cols"
-    t.integer "cell_size"
-    t.integer "speed"
-    t.boolean "cells", array: true
+    t.hstore "settings"
+    t.boolean "grid", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
