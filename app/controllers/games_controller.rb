@@ -11,11 +11,16 @@ class GamesController < ApplicationController
 
   # POST /games
   def create
-    byebug
-    @game = Game.new(game_params)
 
+    @game = Game.new(
+      user: params[:game][:user],
+      name: params[:game][:name],
+      grid: params[:game][:grid],
+      settings: params[:game][:settings]
+    )
+    
     if @game.save
-      render json: @game, status: :created, location: @game
+      render json: @game, status: :created
     else
       render json: @game.errors, status: :unprocessable_entity
     end
@@ -27,6 +32,6 @@ class GamesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def game_params
-      params.fetch(:game, {}).permit(:name, :user, :grid, :settings)
+      params.fetch("game", {}).permit(:name, :user, :grid, :settings)
     end
 end
